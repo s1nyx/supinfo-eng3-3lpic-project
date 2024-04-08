@@ -27,7 +27,7 @@ node 'web1.localdomain.lan', 'web2.localdomain.lan' {
     use_default_location => false,
     locations    => {
       '/' => {
-        proxy => 'http://127.0.0.1:3000', # Remplacer par le port de votre application Node.js
+        proxy => 'http://127.0.0.1:9000', # Remplacer par le port de votre application Node.js
       },
     },
   }
@@ -84,11 +84,6 @@ node 'web1.localdomain.lan', 'web2.localdomain.lan' {
     require => Package['nodejs'],
   }
 
-  # Installer PM2 globalement
-  exec { 'install_pm2':
-    command => '/usr/bin/npm install pm2@latest -g',
-  }
-
   exec { 'install_node_dependencies':
     command => "/usr/bin/npm install",
     cwd     => "${project_dir}/website",
@@ -96,9 +91,9 @@ node 'web1.localdomain.lan', 'web2.localdomain.lan' {
   }
 
   exec { 'run_node_app':
-    command => "/usr/local/bin/pm2 start ${project_dir}/website/app.js --name 'my_node_app'",
+    command => "/usr/bin/nohup /usr/bin/npm start &",
     cwd     => "${project_dir}/website",
     require => Exec['install_node_dependencies'],
-    unless  => "/usr/local/bin/pm2 list | grep 'my_node_app'",
   }
 }
+
