@@ -4,7 +4,6 @@ const mysql = require('mysql2');
 const app = express();
 const port = 3000;
 
-// Configuration de la connexion à la base de données
 const pool = mysql.createPool({
     connectionLimit : 10,
     host            : 'db1.localdomain.lan',
@@ -13,7 +12,6 @@ const pool = mysql.createPool({
     database        : 'your_database_name'
 });
 
-// Route principale qui affiche des données depuis la base de données
 app.get('/', (req, res) => {
     pool.query('SELECT * FROM votre_table LIMIT 10', (err, rows) => {
         if (err) throw err;
