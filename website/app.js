@@ -12,6 +12,7 @@ const pool = mysql.createPool({
     database        : 'your_database_name'
 });
 
+// Route principale qui affiche des données depuis la base de données
 app.get('/', (req, res) => {
     pool.query('SELECT * FROM votre_table LIMIT 10', (err, rows) => {
         if (err) throw err;
