@@ -67,7 +67,7 @@ router.get('/submission-status', async (req, res) => {
             return res.json({ status: 'Not Submitted' });
         }
 
-        res.json({ status: submission.status, score: submission.score });
+        res.json({ status: submission.status, score: submission.score, createdAt: submission.createdAt, updatedAt: submission.updatedAt });
     } catch (error) {
         console.error('Failed to fetch submission status:', error);
         res.status(500).json({ status: 'Error fetching status' });
