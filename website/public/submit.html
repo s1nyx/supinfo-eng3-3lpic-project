@@ -3,15 +3,84 @@
 <head>
     <meta charset="UTF-8">
     <title>Submit Code</title>
+
+    <script>
+        console.log("JS loaded")
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const courseSelect = document.getElementById('course');
+            const exerciseInput = document.getElementById('exercise');
+            const statusDisplay = document.getElementById('submissionStatus');
+
+            // Selecting a course and exercise number will display the submission status.
+            function checkStatus() {
+                const course = courseSelect.value;
+                const exercise = exerciseInput.value;
+
+                if (!course || !exercise) {
+                    statusDisplay.textContent = 'Please select a course and enter an exercise number.';
+                    return;
+                }
+
+                fetch(`/submission-status?course=${course}&exercise=${exercise}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.status === "scored") {
+                            statusDisplay.textContent = `Status: ${data.status} (${data.score}%)`;
+                        } else {
+                            statusDisplay.textContent = `Status: ${data.status}`;
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error fetching submission status:', error);
+                        statusDisplay.textContent = 'Error fetching submission status.';
+                    });
+            }
+
+            courseSelect.addEventListener('change', checkStatus);
+            exerciseInput.addEventListener('input', checkStatus);
+
+
+            // Form submission
+            const form = document.getElementById('submissionForm');
+            const REFRESH_INTERVAL = 15000; // 15 seconds
+
+            form.addEventListener('submit', function(event) {
+                event.preventDefault(); // Prevent traditional form submission
+
+                console.log('Form submitted')
+
+                const formData = new FormData(form);
+
+                fetch('/submit', {
+                    method: 'POST',
+                    body: formData,
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log('Submission successful:', data);
+                        checkStatus(); // Check status after submission
+
+                        setTimeout(() => {
+                            checkStatus();
+                        }, REFRESH_INTERVAL);
+                    })
+                    .catch(error => {
+                        console.error('Submission error:', error);
+                    });
+            });
+        });
+    </script>
+
 </head>
 <body>
 <h2>Submit Code</h2>
-<form action="/submit" method="post" enctype="multipart/form-data">
+<form id="submissionForm" enctype="multipart/form-data">
     <div>
         <label for="course">Course:</label>
         <select id="course" name="course">
-            <option value="course1">Course 1</option>
-            <option value="course2">Course 2</option>
+            <option value="1">Course 1</option>
+            <option value="2">Course 2</option>
         </select>
     </div>
     <div>
@@ -31,5 +100,8 @@
     </div>
     <button type="submit">Submit</button>
 </form>
+
+<div id="submissionStatus">Submission status will appear here.</div>
+
 </body>
 </html>

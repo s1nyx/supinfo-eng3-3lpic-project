@@ -29,6 +29,11 @@ app.use(passport.session());
 app.use(authRoutes);
 app.use(submitRoute);
 
+// Default route which redirects to the submit page
+app.get('/', (req, res) => {
+    res.redirect('/submit');
+});
+
 (async () => {
     try {
         await sequelize.sync({}); // Add { force: true } if you want to drop tables and recreate them
