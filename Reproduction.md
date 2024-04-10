@@ -16,6 +16,7 @@
 192.168.236.140 db1 db1.localdomain.lan
 192.168.236.144 db2 db2.localdomain.lan
 192.168.236.133 loadbalancer1 loadbalancer1.localdomain.lan
+192.168.236.145 loadbalancer2 loadbalancer2.localdomain.lan
 192.168.236.139 dns.localdomain.lan
 ```
 
@@ -42,6 +43,7 @@ sudo puppet ssl bootstrap
 server = puppet
 ```
 IMPORTANT:
+- Sur le Master, il faut générer le certificat SSL pour site.localdomain.lan afin qu'il puisse être copié par puppet
 - Il faut installer le module apt pour utiliser le package manager apt (sur le Master) quand on va vouloir installer des packages comme nginx...
 ```bash
 sudo puppet module install puppetlabs-apt

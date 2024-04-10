@@ -3,21 +3,31 @@ class nginx_load_balancer {
     ensure => installed,
   }
 
-  $ssl_dir = '/etc/nginx/ssl'
-  $cert_file = "${ssl_dir}/site.localdomain.lan.crt"
-  $key_file = "${ssl_dir}/site.localdomain.lan.key"
-
   # S'assurer que le répertoire pour les certificats existe
+  $ssl_dir = '/etc/nginx/ssl'
+
   file { $ssl_dir:
     ensure => directory,
   }
 
-  # Générer un certificat auto-signé
-  exec { 'generate_ssl_certificate':
-    command => "/usr/bin/openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout ${key_file} -out ${cert_file} -subj '/CN=site.localdomain.lan/O=My Company Name/C=FR'",
-    path    => ['/usr/bin', '/bin'],
-    creates => $cert_file,
-    require => File[$ssl_dir],
+  # Copier le certificat SSL
+  file { '/etc/nginx/ssl/site.localdomain.lan.crt':
+    ensure  => file,
+    source  => 'puppet:///modules/nginx/site.localdomain.lan.crt',
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0644',
+    require => File['/etc/nginx/ssl'],
+  }
+
+  # Copier la clé privée
+  file { '/etc/nginx/ssl/site.localdomain.lan.key':
+    ensure  => file,
+    source  => 'puppet:///modules/nginx/site.localdomain.lan.key',
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0600', # Important pour que la clé soit en lecture seule par root
+    require => File['/etc/nginx/ssl'],
   }
 
   file { '/etc/nginx/nginx.conf':
