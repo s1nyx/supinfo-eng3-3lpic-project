@@ -5,14 +5,39 @@ events {
 http {
     upstream app {
         server web1.localdomain.lan;
-        server web2.localdomain.lan;
     }
 
+    # Serveur pour HTTP - Rediriger toutes les requêtes HTTP vers HTTPS
     server {
         listen 80;
+        server_name site.localdomain.lan; # Remplacer par votre FQDN réel
+        return 301 https://$host$request_uri;
+    }
+
+    # Serveur pour HTTPS
+    server {
+        listen 443 ssl;
+        server_name site.localdomain.lan; # Remplacer par votre FQDN réel
+
+        ssl_certificate /etc/nginx/ssl/site.localdomain.lan.crt; # Spécifiez le chemin vers votre certificat SSL
+        ssl_certificate_key /etc/nginx/ssl/site.localdomain.lan.key; # Spécifiez le chemin vers votre clé privée
+
+        # Configuration supplémentaire pour SSL
+        ssl_session_cache shared:SSL:1m;
+        ssl_session_timeout 5m;
+        ssl_ciphers 'HIGH:!aNULL:!MD5';
+        ssl_prefer_server_ciphers on;
 
         location / {
-            proxy_pass http://app;
+            proxy_pass http://app; # Continuez à rediriger le trafic vers votre pool d'applications
+            proxy_set_header Host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header X-Forwarded-Proto $scheme;
         }
+
+        # Logs
+        access_log /var/log/nginx/access.log;
+        error_log /var/log/nginx/error.log;
     }
 }

@@ -1,29 +1,9 @@
 node 'web1.localdomain.lan', 'web2.localdomain.lan' {
   include nginx
 
-  $ssl_dir = '/etc/nginx/ssl'
-  $cert_file = "${ssl_dir}/web1.localdomain.lan.crt"
-  $key_file = "${ssl_dir}/web1.localdomain.lan.key"
-
-  # S'assurer que le répertoire pour les certificats existe
-  file { $ssl_dir:
-    ensure => directory,
-  }
-
-  # Générer un certificat auto-signé
-  exec { 'generate_ssl_certificate':
-    command => "/usr/bin/openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout ${key_file} -out ${cert_file} -subj '/CN=web1.localdomain.lan/O=My Company Name/C=FR'",
-    path    => ['/usr/bin', '/bin'],
-    creates => $cert_file,
-    require => File[$ssl_dir],
-  }
-
   nginx::resource::server { 'my_node_app':
     ensure       => present,
-    listen_port  => 443,
-    ssl          => true,
-    ssl_cert     => '/etc/nginx/ssl/web1.localdomain.lan.crt',
-    ssl_key      => '/etc/nginx/ssl/web1.localdomain.lan.key',
+    listen_port  => 80,
     use_default_location => false,
     locations    => {
       '/' => {
@@ -36,24 +16,6 @@ node 'web1.localdomain.lan', 'web2.localdomain.lan' {
   file { '/etc/nginx/conf.d/default.conf':
     ensure => absent,
     notify => Service['nginx'], # Ceci notifiera le service Nginx qu'un redémarrage est nécessaire
-  }
-
-  # Pour la redirection de l'adresse IP vers le nom de domaine
-  nginx::resource::server { 'redirect_ip_to_fqdn':
-    ensure      => present,
-    listen_port => 80,
-    server_name => ['default_server'], # Utiliser 'default_server' pour capturer toutes les requêtes non capturées par d'autres serveurs
-    location_cfg_append => {
-      return => '301 https://web1.localdomain.lan$request_uri',
-    },
-  }
-
-  # Pour la redirection HTTP vers HTTPS
-  nginx::resource::server { 'redirect_to_https':
-    ensure      => present,
-    listen_port => 80,
-    server_name => ['web1.localdomain.lan', 'web2.localdomain.lan'],
-    rewrite_rules => [ '^ https://$host$request_uri? permanent' ],
   }
 
   package { 'git':

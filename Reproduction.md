@@ -16,6 +16,7 @@
 192.168.236.140 db1 db1.localdomain.lan
 192.168.236.144 db2 db2.localdomain.lan
 192.168.236.133 loadbalancer1 loadbalancer1.localdomain.lan
+192.168.236.139 dns.localdomain.lan
 ```
 
 Il faut également leur définir un nouveau hostname avec la commande `sudo hostnamectl set-hostname web1.localdomain.lan` par exemple pour la VM web1 (faire de même pour les autres VMs)
@@ -54,6 +55,8 @@ sudo puppet module install puppetlabs-apt
 Pour ajouter une configuration à un agent, il faut créer un fichier .pp dans /etc/puppetlabs/code/environments/production/manifests/ et ajouter la configuration voulue 
 Pour ajouter une template à un agent, il faut créer un fichier .erb dans /etc/puppetlabs/code/environments/production/modules/nginx/templates/nginx.conf.erb et ajouter la template voulue (exemple avec nginx) 
 
+Mettre files/site.localdomain.lan.zone dans /etc/puppetlabs/code/environments/production/modules/bind/files/site.localdomain.lan.zone
+Mettre templates/nginx/nginx.conf.erb dans /etc/puppetlabs/code/environments/production/modules/nginx/templates/nginx.conf.erb
 
 Pour appliquer la configuration, il faut exécuter la commande `sudo puppet agent -t` sur l'agent
 
@@ -67,3 +70,5 @@ START SLAVE;
 
 SHOW SLAVE STATUS\G
 ```
+
+Penser à ajouter l'ip du serveur DNS sur sa machine hôte en premier pour qu'elle soit prioritaire dans la résolution de nom
