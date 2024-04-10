@@ -15,6 +15,7 @@
 192.168.236.143 web2 web2.localdomain.lan
 192.168.236.140 db1 db1.localdomain.lan
 192.168.236.144 db2 db2.localdomain.lan
+192.168.236.133 loadbalancer1 loadbalancer1.localdomain.lan
 ```
 
 Il faut également leur définir un nouveau hostname avec la commande `sudo hostnamectl set-hostname web1.localdomain.lan` par exemple pour la VM web1 (faire de même pour les autres VMs)
@@ -50,7 +51,8 @@ sudo puppet module install puppetlabs-apt
 - Pour nodejs: `sudo puppet module install puppet-nodejs`
 - Pour mysql: `sudo puppet module install puppetlabs-mysql --version 15.0.0`
 
-Pour ajouter une configuration à un agent, il faut créer un fichier .pp dans /etc/puppetlabs/code/environments/production/manifests/ et ajouter la configuration voulue (exemple ici:)
+Pour ajouter une configuration à un agent, il faut créer un fichier .pp dans /etc/puppetlabs/code/environments/production/manifests/ et ajouter la configuration voulue 
+Pour ajouter une template à un agent, il faut créer un fichier .erb dans /etc/puppetlabs/code/environments/production/modules/nginx/templates/nginx.conf.erb et ajouter la template voulue (exemple avec nginx) 
 
 
 Pour appliquer la configuration, il faut exécuter la commande `sudo puppet agent -t` sur l'agent
