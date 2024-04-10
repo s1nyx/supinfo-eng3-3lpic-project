@@ -32,6 +32,22 @@ node 'web1.localdomain.lan', 'web2.localdomain.lan' {
     },
   }
 
+  # Assurez-vous que le fichier de configuration par défaut de Nginx est supprimé
+  file { '/etc/nginx/conf.d/default.conf':
+    ensure => absent,
+    notify => Service['nginx'], # Ceci notifiera le service Nginx qu'un redémarrage est nécessaire
+  }
+
+  # Pour la redirection de l'adresse IP vers le nom de domaine
+  nginx::resource::server { 'redirect_ip_to_fqdn':
+    ensure      => present,
+    listen_port => 80,
+    server_name => ['default_server'], # Utiliser 'default_server' pour capturer toutes les requêtes non capturées par d'autres serveurs
+    location_cfg_append => {
+      return => '301 https://web1.localdomain.lan$request_uri',
+    },
+  }
+
   # Pour la redirection HTTP vers HTTPS
   nginx::resource::server { 'redirect_to_https':
     ensure      => present,
