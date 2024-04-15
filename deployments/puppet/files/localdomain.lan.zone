@@ -15,6 +15,9 @@ ns2             IN      A       192.168.236.104
 ; Entrée pour l'adresse IP virtuelle du cluster de base de données
 database        IN      A       192.168.236.200
 
+; Entrée pour l'adresse IP virtuelle du cluster de serveurs web
+site            IN      A       192.168.236.100
+
 ; Autres entrées pour les hôtes dans localdomain.lan
 loadbalancer1   IN      A       192.168.236.140
 loadbalancer2   IN      A       192.168.236.145

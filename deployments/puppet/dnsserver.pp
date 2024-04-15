@@ -7,11 +7,6 @@ node 'dns.localdomain.lan' {
     allow_recursion   => [ 'localhost', '192.168.236.0/24', 'any' ],
   }
 
-  # Exemple pour définir une zone primaire pour site.localdomain.lan
-  bind::zone::primary { 'site.localdomain.lan':
-    source => 'puppet:///modules/bind/site.localdomain.lan.zone',
-  }
-
   bind::zone::primary { 'localdomain.lan':
     source => 'puppet:///modules/bind/localdomain.lan.zone',
   }
