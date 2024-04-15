@@ -1,0 +1,34 @@
+totem {
+  version: 2
+  cluster_name: nginx_cluster
+  transport: udpu
+  interface {
+    ringnumber: 0
+    bindnetaddr: <%= @hostname == 'loadbalancer1' ? '192.168.236.133' : '192.168.236.145' %>
+    broadcast: yes
+    mcastport: 5405
+  }
+}
+
+quorum {
+  provider: corosync_votequorum
+  two_node: 1
+}
+
+nodelist {
+  node {
+    ring0_addr: 192.168.236.133
+    name: loadbalancer1
+  }
+  node {
+    ring0_addr: 192.168.236.145
+    name: loadbalancer2
+  }
+}
+
+logging {
+  to_logfile: yes
+  logfile: /var/log/corosync/corosync.log
+  to_syslog: yes
+  timestamp: on
+}

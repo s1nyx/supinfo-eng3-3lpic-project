@@ -20,6 +20,8 @@
 192.168.236.139 dns.localdomain.lan
 ```
 
+IP Virtuel Cluster Loadbalancer: 192.168.236.100
+
 Il faut également leur définir un nouveau hostname avec la commande `sudo hostnamectl set-hostname web1.localdomain.lan` par exemple pour la VM web1 (faire de même pour les autres VMs)
 
 
@@ -59,6 +61,7 @@ Pour ajouter une template à un agent, il faut créer un fichier .erb dans /etc/
 
 Mettre files/site.localdomain.lan.zone dans /etc/puppetlabs/code/environments/production/modules/bind/files/site.localdomain.lan.zone
 Mettre templates/nginx/nginx.conf.erb dans /etc/puppetlabs/code/environments/production/modules/nginx/templates/nginx.conf.erb
+Mettre templates/nginx/corosync.conf.erb dans /etc/puppetlabs/code/environments/production/modules/corosync/templates/corosync.conf.erb
 
 Pour appliquer la configuration, il faut exécuter la commande `sudo puppet agent -t` sur l'agent
 
