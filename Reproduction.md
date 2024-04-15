@@ -1,7 +1,7 @@
 2 VM de Serveurs Web, 2 VMs de BDD
 
 
-- J'ai créé une template debian 12
+- J'ai créé une template debian 11 
 - J'ai setups les autres VMs avec cette template
 - J'ai setup une VM qui sera le Master de Puppet sur du Debian 11 car sinon y'a des pbs de compatibilités
 - J'ai installé puppetserver sur le Master
@@ -21,6 +21,7 @@
 ```
 
 IP Virtuel Cluster Loadbalancer: 192.168.236.100
+IP Virtual Cluster MySQL: 192.168.236.200
 
 Il faut également leur définir un nouveau hostname avec la commande `sudo hostnamectl set-hostname web1.localdomain.lan` par exemple pour la VM web1 (faire de même pour les autres VMs)
 
@@ -61,7 +62,8 @@ Pour ajouter une template à un agent, il faut créer un fichier .erb dans /etc/
 
 Mettre files/site.localdomain.lan.zone dans /etc/puppetlabs/code/environments/production/modules/bind/files/site.localdomain.lan.zone
 Mettre templates/nginx/nginx.conf.erb dans /etc/puppetlabs/code/environments/production/modules/nginx/templates/nginx.conf.erb
-Mettre templates/nginx/corosync.conf.erb dans /etc/puppetlabs/code/environments/production/modules/corosync/templates/corosync.conf.erb
+Mettre templates/nginx/corosync.conf.erb dans /etc/puppetlabs/code/environments/production/modules/nginx/templates/corosync.conf.erb
+Mettre templates/mysql/corosync.conf.erb dans /etc/puppetlabs/code/environments/production/modules/mysql/templates/corosync.conf.erb
 
 Pour appliquer la configuration, il faut exécuter la commande `sudo puppet agent -t` sur l'agent
 

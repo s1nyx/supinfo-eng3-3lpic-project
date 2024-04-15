@@ -11,4 +11,8 @@ node 'dns.localdomain.lan' {
   bind::zone::primary { 'site.localdomain.lan':
     source => 'puppet:///modules/bind/site.localdomain.lan.zone',
   }
+
+  bind::zone::primary { 'localdomain.lan':
+    source => 'puppet:///modules/bind/localdomain.lan.zone',
+  }
 }
