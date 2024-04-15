@@ -15,7 +15,7 @@
 192.168.236.143 web2 web2.localdomain.lan
 192.168.236.140 db1 db1.localdomain.lan
 192.168.236.144 db2 db2.localdomain.lan
-192.168.236.133 loadbalancer1 loadbalancer1.localdomain.lan
+192.168.236.146 loadbalancer1 loadbalancer1.localdomain.lan
 192.168.236.145 loadbalancer2 loadbalancer2.localdomain.lan
 192.168.236.139 dns.localdomain.lan
 ```
@@ -57,7 +57,7 @@ sudo puppet module install puppetlabs-apt
 - Pour mysql: `sudo puppet module install puppetlabs-mysql --version 15.0.0`
 
 Pour ajouter une configuration à un agent, il faut créer un fichier .pp dans /etc/puppetlabs/code/environments/production/manifests/ et ajouter la configuration voulue 
-Pour ajouter une template à un agent, il faut créer un fichier .erb dans /etc/puppetlabs/code/environments/production/modules/nginx/templates/nginx.conf.erb et ajouter la template voulue (exemple avec nginx) 
+Pour ajouter une template à un agent, il faut créer un fichier .erb dans /etc/puppetlabs/code/environments/production/modules/nginx/templates/nginx.conf.erb et ajouter la template voulue (exemple avec nginx)
 
 Mettre files/site.localdomain.lan.zone dans /etc/puppetlabs/code/environments/production/modules/bind/files/site.localdomain.lan.zone
 Mettre templates/nginx/nginx.conf.erb dans /etc/puppetlabs/code/environments/production/modules/nginx/templates/nginx.conf.erb
@@ -77,3 +77,11 @@ SHOW SLAVE STATUS\G
 ```
 
 Penser à ajouter l'ip du serveur DNS sur sa machine hôte en premier pour qu'elle soit prioritaire dans la résolution de nom
+
+
+
+# Corosync
+
+Pour vérifier qu'il fonctionne et bascule automatiquement sur le serveur actif en cas de panne:
+Executer `sudo crm status` pour voir les ressources actives
+Executer `sudo systemctl stop corosync pacemaker` sur le serveur avec les resource group "Started"

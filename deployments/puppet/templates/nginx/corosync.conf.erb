@@ -4,7 +4,7 @@ totem {
   transport: udpu
   interface {
     ringnumber: 0
-    bindnetaddr: <%= @hostname == 'loadbalancer1' ? '192.168.236.133' : '192.168.236.145' %>
+    bindnetaddr: <%= @hostname == 'loadbalancer1.localdomain.lan' ? '192.168.236.146' : '192.168.236.145' %>
     broadcast: yes
     mcastport: 5405
   }
@@ -17,12 +17,12 @@ quorum {
 
 nodelist {
   node {
-    ring0_addr: 192.168.236.133
-    name: loadbalancer1
+    ring0_addr: 192.168.236.146
+    name: loadbalancer1.localdomain.lan
   }
   node {
     ring0_addr: 192.168.236.145
-    name: loadbalancer2
+    name: loadbalancer2.localdomain.lan
   }
 }
 

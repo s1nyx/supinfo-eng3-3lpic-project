@@ -14,5 +14,4 @@ ns2             IN      A       192.168.236.104
 
 
 ; Ou utiliser des enregistrements A pour la racine du domaine, si applicable
-@               IN      A       192.168.236.133
-@               IN      A       192.168.236.145
+@               IN      A       192.168.236.100
