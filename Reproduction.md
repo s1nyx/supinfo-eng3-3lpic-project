@@ -1,5 +1,7 @@
-2 VM de Serveurs Web, 2 VMs de BDD
+Pour info: Cette version du livrable sera mit à jour après la date de rendu du projet.
 
+2 VM de Serveurs Web, 2 VMs de BDD
+Schéma de l'architecture: https://app.eraser.io/workspace/2rNhCBxY4HGygX4Wp8wa
 
 - J'ai créé une template debian 11 
 - J'ai setups les autres VMs avec cette template
