@@ -24,6 +24,7 @@ Schéma de l'architecture: https://app.eraser.io/workspace/2rNhCBxY4HGygX4Wp8wa
 
 IP Virtuel Cluster Loadbalancer: 192.168.236.100
 IP Virtual Cluster MySQL: 192.168.236.200
+IP Virtel Cluster Reverse Proxy: 192.168.236.150
 
 Il faut également leur définir un nouveau hostname avec la commande `sudo hostnamectl set-hostname web1.localdomain.lan` par exemple pour la VM web1 (faire de même pour les autres VMs)
 
