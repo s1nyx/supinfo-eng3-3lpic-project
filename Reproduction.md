@@ -13,13 +13,13 @@ Schéma de l'architecture: https://app.eraser.io/workspace/2rNhCBxY4HGygX4Wp8wa
 
 ```bash
 192.168.236.136 puppetmaster puppetmaster.localdomain.lan puppet puppet.localdomain.lan
-192.168.236.142 web1 web1.localdomain.lan
-192.168.236.143 web2 web2.localdomain.lan
+192.168.236.148 web1 web1.localdomain.lan
+192.168.236.139 web2 web2.localdomain.lan
 192.168.236.140 db1 db1.localdomain.lan
 192.168.236.144 db2 db2.localdomain.lan
 192.168.236.146 loadbalancer1 loadbalancer1.localdomain.lan
 192.168.236.145 loadbalancer2 loadbalancer2.localdomain.lan
-192.168.236.139 dns.localdomain.lan
+192.168.236.147 dns.localdomain.lan
 ```
 
 IP Virtuel Cluster Loadbalancer: 192.168.236.100

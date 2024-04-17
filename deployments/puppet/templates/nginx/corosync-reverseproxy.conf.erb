@@ -1,0 +1,34 @@
+totem {
+  version: 2
+  cluster_name: nginx_reverseproxy_cluster
+  transport: udpu
+  interface {
+    ringnumber: 0
+    bindnetaddr: <%= @hostname == 'web1.localdomain.lan' ? '192.168.236.148' : '192.168.236.139' %>
+    broadcast: yes
+    mcastport: 5405
+  }
+}
+
+quorum {
+  provider: corosync_votequorum
+  two_node: 1
+}
+
+nodelist {
+  node {
+    ring0_addr: 192.168.236.148
+    name: web1.localdomain.lan
+  }
+  node {
+    ring0_addr: 192.168.236.139
+    name: web2.localdomain.lan
+  }
+}
+
+logging {
+  to_logfile: yes
+  logfile: /var/log/corosync/corosync.log
+  to_syslog: yes
+  timestamp: on
+}
