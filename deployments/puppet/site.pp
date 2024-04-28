@@ -1,13 +1,3 @@
-class dns_config {
-  file { '/etc/resolv.conf':
-    ensure  => file,
-    owner   => 'root',
-    group   => 'root',
-    mode    => '0644',
-    content => "nameserver 192.168.236.147\nsearch localdomain.lan\n",
-  }
-}
-
 class nginx_web {
   include nginx
 

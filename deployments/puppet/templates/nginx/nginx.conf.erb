@@ -4,7 +4,7 @@ events {
 
 http {
     upstream app {
-        server web1.localdomain.lan;
+        server reverseproxy.localdomain.lan;
     }
 
     # Serveur pour HTTP - Rediriger toutes les requêtes HTTP vers HTTPS

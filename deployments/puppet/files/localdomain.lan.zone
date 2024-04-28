@@ -21,8 +21,8 @@ site            IN      A       192.168.236.100
 ; Entrée pour l'adresse IP virtuelle du cluster des reverse proxies
 reverseproxy    IN      A       192.168.236.150
 
-; Autres entrées pour les hôtes dans localdomain.lan
-loadbalancer1   IN      A       192.168.236.140
+; Autres entrées pour les hôtes dans localdomain.lansu
+loadbalancer1   IN      A       192.168.236.146
 loadbalancer2   IN      A       192.168.236.145
 db1             IN      A       192.168.236.140
 db2             IN      A       192.168.236.144
