@@ -1,3 +1,13 @@
+class dns_config {
+  file { '/etc/resolv.conf':
+    ensure  => file,
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0644',
+    content => "nameserver 192.168.236.147\nsearch localdomain.lan\n",
+  }
+}
+
 class nginx_load_balancer {
   package { 'nginx':
     ensure => installed,
@@ -111,5 +121,6 @@ class nginx_load_balancer {
 }
 
 node /^loadbalancer\d+\.localdomain\.lan$/ {
+  include dns_config
   include nginx_load_balancer
 }

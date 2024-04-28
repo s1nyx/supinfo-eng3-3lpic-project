@@ -15,8 +15,11 @@ ns2             IN      A       192.168.236.104
 ; Entrée pour l'adresse IP virtuelle du cluster de base de données
 database        IN      A       192.168.236.200
 
-; Entrée pour l'adresse IP virtuelle du cluster de serveurs web
+; Entrée pour l'adresse IP virtuelle du cluster des loadbalancers
 site            IN      A       192.168.236.100
+
+; Entrée pour l'adresse IP virtuelle du cluster des reverse proxies
+reverseproxy    IN      A       192.168.236.150
 
 ; Autres entrées pour les hôtes dans localdomain.lan
 loadbalancer1   IN      A       192.168.236.140

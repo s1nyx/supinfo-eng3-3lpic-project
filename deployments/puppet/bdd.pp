@@ -1,4 +1,16 @@
+class dns_config {
+  file { '/etc/resolv.conf':
+    ensure  => file,
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0644',
+    content => "nameserver 192.168.236.147\nsearch localdomain.lan\n",
+  }
+}
+
 node 'db1.localdomain.lan' {
+  include dns_config
+
   class { '::mysql::server':
     root_password           => 'strong_root_password',
     override_options        => {
@@ -90,6 +102,8 @@ node 'db1.localdomain.lan' {
 
 node /^db[2-9]\.localdomain\.lan$/ {
   $node_number = regsubst($trusted['certname'], '^db(\d+)\.localdomain\.lan$', '\1')
+
+  include dns_config
 
   class { '::mysql::server':
     root_password    => 'strong_root_password',
