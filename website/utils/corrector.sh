@@ -7,7 +7,7 @@ exercise_number="$3"     # Exercise number
 languageFormat="$4"      # Programming languageFormat (e.g., python, c)
 
 # Directory containing reference inputs and implementations
-reference_dir="/Users/sinyx/Documents/SUPINFO/3LPIC/supinfo-eng3-3lpic-project/reference"
+reference_dir="/var/www/my_node_app/reference"
 
 # Construct the paths to the input file and the reference implementation
 input_file="${reference_dir}/${course_id}/${exercise_number}/input.txt"

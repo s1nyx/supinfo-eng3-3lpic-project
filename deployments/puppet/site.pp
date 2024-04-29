@@ -145,8 +145,19 @@ class ha_tools {
   }
 }
 
+class dev_tools {
+  package { 'python3':
+    ensure => installed,
+  }
+
+  package { 'gcc':
+    ensure => installed,
+  }
+}
+
 node /^web\d+\.localdomain\.lan$/ {
   include dns_config
+  include dev_tools
   include nginx_web
   include node_app
   include ha_tools
