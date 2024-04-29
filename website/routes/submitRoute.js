@@ -4,7 +4,7 @@ const path = require('path');
 const {executeAndCompare} = require("../utils/correctionUtil");
 const Submission = require('../models/submission');
 
-const upload = multer({ dest: 'uploads/' });
+const upload = multer({ dest: './uploads/' });
 const router = express.Router();
 const basePath = path.join(__dirname, '..', 'public');
 
