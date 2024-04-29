@@ -4,9 +4,9 @@ const path = require('path');
 const {executeAndCompare} = require("../utils/correctionUtil");
 const Submission = require('../models/submission');
 
-const upload = multer({ dest: './uploads/' });
-const router = express.Router();
 const basePath = path.join(__dirname, '..', 'public');
+const upload = multer({ dest: path.join(__dirname, '..', 'uploads') });
+const router = express.Router();
 
 
 // Route to serve the submit page
