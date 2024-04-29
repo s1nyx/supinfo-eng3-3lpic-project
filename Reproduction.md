@@ -59,6 +59,7 @@ sudo puppet module install puppetlabs-apt
 - Pour git: `sudo puppet module install theforeman-git`
 - Pour nodejs: `sudo puppet module install puppet-nodejs`
 - Pour mysql: `sudo puppet module install puppetlabs-mysql --version 15.0.0`
+- Pour bind: `sudo puppet module install stm-bind`
 
 Pour ajouter une configuration à un agent, il faut créer un fichier .pp dans /etc/puppetlabs/code/environments/production/manifests/ et ajouter la configuration voulue 
 Pour ajouter une template à un agent, il faut créer un fichier .erb dans /etc/puppetlabs/code/environments/production/modules/nginx/templates/nginx.conf.erb et ajouter la template voulue (exemple avec nginx)
